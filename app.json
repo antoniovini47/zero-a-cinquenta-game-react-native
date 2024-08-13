@@ -1,8 +1,8 @@
 {
   "expo": {
     "name": "zero-a-cinquenta-game-react-native",
-    "slug": "zero-a-cinquenta-game-react-native",
-    "version": "1.0.0",
+    "slug": "zero-a-cinquenta",
+    "version": "0.9.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -16,6 +16,7 @@
       "supportsTablet": true
     },
     "android": {
+      "package": "com.rotech.dezeroacinquenta2",
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#ffffff"
@@ -31,6 +32,24 @@
     ],
     "experiments": {
       "typedRoutes": true
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "f0ada14a-c3ce-42db-a855-8b46f23b3e27"
+      }
+    },
+    "owner": "rotec",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/f0ada14a-c3ce-42db-a855-8b46f23b3e27"
     }
+  },
+  "react-native-google-mobile-ads": {
+    "android_app_id": "process.env.EXPO_PUBLIC_ADMOB_APP_ID"
   }
 }

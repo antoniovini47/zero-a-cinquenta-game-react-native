@@ -1,4 +1,7 @@
 import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { useEffect } from "react";
+import mobileAds from "react-native-google-mobile-ads";
+import InlineAd from "@/components/InlineAd";
 
 const styles = StyleSheet.create({
   mainContainer: {
@@ -7,6 +10,11 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "black",
+  },
+  adHeaderContainer: {
+    flexDirection: "row",
+    flex: 1,
+    backgroundColor: "blue",
   },
   footerContainer: {
     flexDirection: "row",
@@ -47,8 +55,24 @@ const chunkArray = (array: any, chunkSize: number) => {
 const buttonChunks = chunkArray(buttons, 5);
 
 export default function Index() {
+  useEffect(() => {
+    (async () => {
+      // Google AdMob will show any messages here that you just set up on the AdMob Privacy & Messaging page
+      const { status: trackingStatus } = await requestTrackingPermissionsAsync();
+      if (trackingStatus !== "granted") {
+        // Do something here such as turn off Sentry tracking, store in context/redux to allow for personalized ads, etc.
+      }
+
+      // Initialize the ads
+      //await mobileAds().initialize();
+    })();
+  }, []);
+
   return (
     <>
+      <View style={styles.adHeaderContainer}>
+        {__DEV__ ? <Text>Carregando ad...</Text> : <Text>Inline ad aqui</Text>}
+      </View>
       <View style={styles.mainContainer}>
         {buttonChunks.map((chunk, rowIndex) => (
           <View key={"row" + rowIndex} style={styles.row}>
