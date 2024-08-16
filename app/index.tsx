@@ -1,46 +1,8 @@
-import { Text, View, TouchableOpacity, StyleSheet } from "react-native";
+import { Text, View, TouchableOpacity } from "react-native";
 import { useEffect } from "react";
+import styles from "@/assets/Styles";
 import mobileAds from "react-native-google-mobile-ads";
 import InlineAd from "@/components/InlineAd";
-
-const styles = StyleSheet.create({
-  mainContainer: {
-    padding: 10,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "black",
-  },
-  adHeaderContainer: {
-    flexDirection: "row",
-    flex: 1,
-    backgroundColor: "blue",
-  },
-  footerContainer: {
-    flexDirection: "row",
-    alignItems: "center",
-    padding: 10,
-    backgroundColor: "black",
-  },
-  row: {
-    flexDirection: "row",
-    flex: 1,
-    marginBottom: 10,
-    gap: 10,
-  },
-  button: {
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "white",
-    flex: 1,
-    padding: 20,
-  },
-  text: {
-    color: "black",
-    fontWeight: "bold",
-    fontSize: 20,
-  },
-});
 
 const buttons = Array.from({ length: 50 }, (_, index) => index + 1);
 
@@ -64,14 +26,14 @@ export default function Index() {
       }
 
       // Initialize the ads
-      //await mobileAds().initialize();
+      await mobileAds().initialize();
     })();
   }, []);
 
   return (
     <>
       <View style={styles.adHeaderContainer}>
-        {__DEV__ ? <Text>Carregando ad...</Text> : <Text>Inline ad aqui</Text>}
+        <InlineAd />
       </View>
       <View style={styles.mainContainer}>
         {buttonChunks.map((chunk, rowIndex) => (

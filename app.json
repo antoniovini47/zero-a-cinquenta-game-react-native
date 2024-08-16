@@ -2,7 +2,7 @@
   "expo": {
     "name": "zero-a-cinquenta-game-react-native",
     "slug": "zero-a-cinquenta",
-    "version": "0.9.0",
+    "version": "2.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -28,7 +28,14 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-9218769381944425~8121106243",
+          "iosAppId": "ca-app-pub-9218769381944425~8121106243"
+        }
+      ]
     ],
     "experiments": {
       "typedRoutes": true

@@ -147,3 +147,5 @@ ios/Pods/
 
 expo-env.d.ts
 # @end expo-cli
+# Production APK's
+*.apk
