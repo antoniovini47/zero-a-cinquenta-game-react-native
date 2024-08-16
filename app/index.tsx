@@ -32,9 +32,7 @@ export default function Index() {
 
   return (
     <>
-      <View style={styles.adHeaderContainer}>
-        <InlineAd />
-      </View>
+      <InlineAd />
       <View style={styles.mainContainer}>
         {buttonChunks.map((chunk, rowIndex) => (
           <View key={"row" + rowIndex} style={styles.row}>

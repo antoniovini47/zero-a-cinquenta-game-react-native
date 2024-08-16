@@ -23,6 +23,7 @@ const styles = StyleSheet.create({
   footerContainer: {
     flexDirection: "row",
     alignItems: "center",
+    gap: paddingStandard,
     flex: 0,
     paddingHorizontal: 10,
     paddingBottom: 10,
