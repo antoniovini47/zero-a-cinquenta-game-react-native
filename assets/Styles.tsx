@@ -1,43 +1,52 @@
 import { StyleSheet } from "react-native";
 
+const paddingStandard = 6;
+const fontSizeStandard = 20;
+
+const backgroundColor = "black";
+
 const styles = StyleSheet.create({
-  mainContainer: {
-    padding: 10,
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "black",
-  },
   adHeaderContainer: {
     flexDirection: "row",
-    flex: 1,
-    backgroundColor: "blue",
+    flex: 0,
+    height: "auto",
+    backgroundColor: backgroundColor,
     justifyContent: "center",
     alignItems: "center",
+  },
+  mainContainer: {
+    padding: paddingStandard,
+    flex: 8,
+    alignItems: "center",
+    backgroundColor: backgroundColor,
   },
   footerContainer: {
     flexDirection: "row",
     alignItems: "center",
-    padding: 10,
-    backgroundColor: "black",
+    flex: 0,
+    paddingHorizontal: 10,
+    paddingBottom: 10,
+    backgroundColor: backgroundColor,
   },
+
   row: {
     flexDirection: "row",
     flex: 1,
-    marginBottom: 10,
-    gap: 10,
+    marginBottom: paddingStandard,
+    gap: paddingStandard,
   },
+
   button: {
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
     flex: 1,
-    padding: 20,
+    padding: fontSizeStandard,
   },
   text: {
     color: "black",
     fontWeight: "bold",
-    fontSize: 20,
+    fontSize: fontSizeStandard,
   },
 });
 
