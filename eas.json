@@ -6,7 +6,6 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
-      "channel": "development",
       "android": {
         "buildType": "apk"
       },
@@ -20,6 +19,10 @@
       "channel": "preview",
       "android": {
         "buildType": "apk"
+      },
+      "env": {
+          "EXPO_PUBLIC_ADMOB_APP_ID": "$EXPO_PUBLIC_ADMOB_APP_ID$",
+          "EXPO_PUBLIC_ADMOB_BANNER_ID": "$EXPO_PUBLIC_ADMOB_BANNER_ID$"
       }
     },
     "production": {

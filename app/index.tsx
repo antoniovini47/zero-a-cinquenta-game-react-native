@@ -1,8 +1,9 @@
 import { Text, View, TouchableOpacity } from "react-native";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/assets/Styles";
 import mobileAds from "react-native-google-mobile-ads";
 import InlineAd from "@/components/InlineAd";
+import { Ionicons } from "@expo/vector-icons";
 
 const buttons = Array.from({ length: 50 }, (_, index) => index + 1);
 
@@ -16,7 +17,12 @@ const chunkArray = (array: any, chunkSize: number) => {
 
 const buttonChunks = chunkArray(buttons, 5);
 
+const iconSizeStandard = 48;
+
 export default function Index() {
+  const [appState, setCurrentState] = useState<"playing" | "waiting" | "selecting">("waiting");
+  const [stortedNumber, setStoredNumber] = useState(0);
+
   useEffect(() => {
     (async () => {
       // Google AdMob will show any messages here that you just set up on the AdMob Privacy & Messaging page
@@ -45,11 +51,14 @@ export default function Index() {
         ))}
       </View>
       <View style={styles.footerContainer}>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.text}>Iniciar</Text>
+        <TouchableOpacity key={"buttonSort"} style={styles.button}>
+          <Ionicons size={iconSizeStandard} name="dice-sharp" color="black" />
         </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.text}>Configurações</Text>
+        <TouchableOpacity key={"buttonChoose"} style={styles.button}>
+          <Ionicons size={iconSizeStandard} name="eye-sharp" color="black" />
+        </TouchableOpacity>
+        <TouchableOpacity key={"buttonSettings"} style={styles.button}>
+          <Ionicons size={iconSizeStandard} name="cog-sharp" color="black" />
         </TouchableOpacity>
       </View>
     </>
