@@ -1,14 +1,13 @@
 import { Text, View, TouchableOpacity } from "react-native";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState } from "react";
 import styles from "@/assets/Styles";
 import mobileAds from "react-native-google-mobile-ads";
 import InlineAd from "@/components/InlineAd";
 import { Ionicons } from "@expo/vector-icons";
-import GameButton from "@/components/GameButton";
+import showToast from "@/components/useToast";
+import Dialog from "react-native-dialog";
 
 const iconSizeStandard = 48;
-
-const disableTrue = "disabled: true, style: styles.buttonGameDisable";
 
 export interface ButtonGameArrayProps {
   idButton: number;
@@ -26,6 +25,7 @@ export default function Index() {
       style: styles.buttonGameDisable,
     }))
   );
+  const [isDialogBoxNewGameVisible, setIsDialogBoxNewGameVisible] = useState(false);
 
   function enableAllButtons() {
     setButtons((prevButtons) =>
@@ -54,8 +54,10 @@ export default function Index() {
   function startGameSortedMode() {
     if (appState === "playing") {
       // TODO: Dialog box for "Are you sure you want to start a new game?"
+      setIsDialogBoxNewGameVisible(true);
       return;
     }
+    showToast("Numero sorteado, boa sorte a todos!");
     // TODO: Toast message "Numero sorteado, boa sorte a todos!" + Audio
     startGame(Math.floor(Math.random() * 50) + 1);
   }
@@ -76,15 +78,24 @@ export default function Index() {
     setCurrentState("playing");
   }
 
+  function handleNewGame() {
+    // TODO: Implement logic for game restart
+    showToast("Novo jogo iniciado!");
+  }
+
   function gameButtonPressed(button: number) {
     console.log("Botão pressionado: ", button);
     if (appState == "paused") {
-      // TODO: Toast message "Selecione um modo de jogo abaixo" + Audio
+      // NeverExecuted
+      showToast("Selecione um modo de jogo abaixo!");
+      // TODO: Audio
+      return;
     }
 
     if (appState == "selecting") {
       startGame(button);
-      // TODO: Toast message "Numero escolhido, boa sorte a todos!" + Audio
+      showToast("Numero escolhido, boa sorte a todos!");
+      // TODO: Audio
       return;
     }
 
@@ -93,7 +104,7 @@ export default function Index() {
         disableAllButtons();
         setCurrentState("paused");
         // TODO: Modal message "Parabéns, você encontrou!" Botão "Jogar novamente" // resetar o estado do jogo
-        //Chama o interstitial Ad com um toast
+        // Chama o interstitial Ad com um toast antes
         return;
       }
     }
@@ -156,6 +167,15 @@ export default function Index() {
         <TouchableOpacity key={"buttonSettings"} style={styles.buttonMenu}>
           <Ionicons size={iconSizeStandard} name="cog-sharp" color="black" />
         </TouchableOpacity>
+      </View>
+
+      <View>
+        <Dialog.Container visible={isDialogBoxNewGameVisible}>
+          <Dialog.Title>Novo Jogo</Dialog.Title>
+          <Dialog.Description>Tem certeza que deseja começar um novo Jogo?</Dialog.Description>
+          <Dialog.Button onPress={handleNewGame} label="Sim" />
+          <Dialog.Button onPress={() => setIsDialogBoxNewGameVisible(false)} label="Cancelar" />
+        </Dialog.Container>
       </View>
     </>
   );
