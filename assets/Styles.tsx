@@ -8,6 +8,7 @@ const backgroundColor = "black";
 const styles = StyleSheet.create({
   adHeaderContainer: {
     flexDirection: "row",
+    paddingBottom: paddingStandard,
     flex: 0,
     height: "auto",
     backgroundColor: backgroundColor,
@@ -15,34 +16,43 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   mainContainer: {
-    padding: paddingStandard,
+    flexDirection: "row",
+    paddingTop: paddingStandard,
+    paddingHorizontal: paddingStandard,
     flex: 8,
+    gap: paddingStandard,
     alignItems: "center",
+    justifyContent: "center",
     backgroundColor: backgroundColor,
+    flexWrap: "wrap",
   },
   footerContainer: {
     flexDirection: "row",
     alignItems: "center",
+    justifyContent: "center",
     gap: paddingStandard,
-    flex: 0,
+    flex: 1,
     paddingHorizontal: 10,
     paddingBottom: 10,
     backgroundColor: backgroundColor,
+    height: "100%",
   },
 
-  row: {
-    flexDirection: "row",
-    flex: 1,
-    marginBottom: paddingStandard,
-    gap: paddingStandard,
-  },
-
-  button: {
+  buttonGame: {
+    height: "9%",
+    width: "18%",
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "white",
+    padding: paddingStandard,
+  },
+  buttonMenu: {
     flex: 1,
-    padding: fontSizeStandard,
+    height: "100%",
+    width: "auto",
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "white",
   },
   text: {
     color: "black",
