@@ -8,24 +8,35 @@ import GameButton from "@/components/GameButton";
 
 const iconSizeStandard = 48;
 
+const disableTrue = "disabled: true, style: styles.buttonGameDisable";
+
 export interface ButtonGameArrayProps {
   idButton: number;
   disabled: boolean;
+  style: any;
 }
 
 export default function Index() {
   const [appState, setCurrentState] = useState<"playing" | "paused" | "selecting">("paused");
   const [sortedNumber, setSortedNumber] = useState(0);
   const [buttons, setButtons] = useState<ButtonGameArrayProps[]>(
-    Array.from({ length: 50 }, (_, index) => ({ idButton: index + 1, disabled: true }))
+    Array.from({ length: 50 }, (_, index) => ({
+      idButton: index + 1,
+      disabled: true,
+      style: styles.buttonGameDisable,
+    }))
   );
 
   function enableAllButtons() {
-    setButtons((prevButtons) => prevButtons.map((button) => ({ ...button, disabled: false })));
+    setButtons((prevButtons) =>
+      prevButtons.map((button) => ({ ...button, disabled: false, style: styles.buttonGameActive }))
+    );
   }
 
   function disableAllButtons() {
-    setButtons((prevButtons) => prevButtons.map((button) => ({ ...button, disabled: true })));
+    setButtons((prevButtons) =>
+      prevButtons.map((button) => ({ ...button, disabled: true, style: styles.buttonGameDisable }))
+    );
   }
 
   useEffect(() => {
@@ -60,11 +71,13 @@ export default function Index() {
 
   function startGame(sortedNumber: number) {
     setSortedNumber(sortedNumber);
+    console.log("Numero sorteado: ", sortedNumber);
     enableAllButtons();
     setCurrentState("playing");
   }
 
   function gameButtonPressed(button: number) {
+    console.log("Botão pressionado: ", button);
     if (appState == "paused") {
       // TODO: Toast message "Selecione um modo de jogo abaixo" + Audio
     }
@@ -81,15 +94,36 @@ export default function Index() {
         setCurrentState("paused");
         // TODO: Modal message "Parabéns, você encontrou!" Botão "Jogar novamente" // resetar o estado do jogo
         //Chama o interstitial Ad com um toast
+        return;
       }
-      return;
     }
 
     deactivateImpossibles(button);
   }
 
-  function deactivateImpossibles(button: number) {
+  function deactivateImpossibles(buttonPressed: number) {
     // TODO: Create logic for deactivating impossible buttons
+    if (buttonPressed < sortedNumber) {
+      setButtons((prevButtons) =>
+        prevButtons.map((button) => {
+          if (button.idButton <= buttonPressed) {
+            return { ...button, disabled: true, style: styles.buttonGameDisable };
+          }
+          return button;
+        })
+      );
+    }
+
+    if (buttonPressed > sortedNumber) {
+      setButtons((prevButtons) =>
+        prevButtons.map((button) => {
+          if (button.idButton >= buttonPressed) {
+            return { ...button, disabled: true, style: styles.buttonGameDisable };
+          }
+          return button;
+        })
+      );
+    }
   }
 
   return (
@@ -101,7 +135,7 @@ export default function Index() {
             onPress={() => gameButtonPressed(button.idButton)}
             disabled={button.disabled}
             key={button.idButton}
-            style={styles.buttonGame}>
+            style={button.style}>
             <Text style={styles.text}>{button.idButton}</Text>
           </TouchableOpacity>
         ))}

@@ -5,6 +5,14 @@ const fontSizeStandard = 20;
 
 const backgroundColor = "black";
 
+const buttonGame = {
+  height: "9%",
+  width: "18%",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: paddingStandard,
+};
+
 const styles = StyleSheet.create({
   adHeaderContainer: {
     flexDirection: "row",
@@ -38,13 +46,13 @@ const styles = StyleSheet.create({
     height: "100%",
   },
 
-  buttonGame: {
-    height: "9%",
-    width: "18%",
-    justifyContent: "center",
-    alignItems: "center",
+  buttonGameActive: {
+    ...buttonGame,
     backgroundColor: "white",
-    padding: paddingStandard,
+  },
+  buttonGameDisable: {
+    ...buttonGame,
+    backgroundColor: "gray",
   },
   buttonMenu: {
     flex: 1,
