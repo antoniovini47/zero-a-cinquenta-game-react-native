@@ -1,5 +1,9 @@
 import { ToastAndroid } from "react-native";
 
 export default function showToast(msg: string) {
-  ToastAndroid.show(msg, ToastAndroid.LONG);
+  ToastAndroid.showWithGravity(
+    msg,
+    __DEV__ ? ToastAndroid.SHORT : ToastAndroid.LONG,
+    ToastAndroid.TOP
+  );
 }

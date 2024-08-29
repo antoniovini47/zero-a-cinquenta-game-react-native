@@ -8,15 +8,21 @@ import showToast from "@/components/useToast";
 import Dialog from "react-native-dialog";
 
 const iconSizeStandard = 48;
+const textInstructions =
+  "Um jogo de adivinhação ao contrário, ou seja, seu objetivo é não adivinhar. App idealizado com base no famoso jogo de roda de amigos chamado 'Zero a Cinquenta'.\n\nModo de jogo 1 (Escolher número): \nAo escolher um número, a pessoa da vez passa para seu amigo ao lado. Este, escolhe um dos 50 números, caso erre, passa para o próximo. Se alguém acertar, perde e paga o 'castigo', se não restarem números, exceto o número secreto, o que escondeu o jogador da vez é que perde. \nA pessoa que paga a prenda é aquela que perdeu, esta agora é o que escolhe. \n\nModo de jogo 2 (Sortear): \nO jogador da vez pode usar a opção 'sortear' disponível, o próprio jogo escolhe um número aleatório e ninguém mais saberá qual é, logo, o jogador da vez também participa desse modo de jogo, pois, também não sabe onde se encontra.";
+const urlPremiumVersion =
+  "https://play.google.com/store/apps/details?id=com.rotech.zeroacinquentapremium";
 
 export interface ButtonGameArrayProps {
   idButton: number;
   disabled: boolean;
   style: any;
 }
+type AppState = "playing" | "paused" | "selecting";
+let lastClickedGameMode: string = "sortedMode";
+let appState: AppState = "paused";
 
 export default function Index() {
-  const [appState, setCurrentState] = useState<"playing" | "paused" | "selecting">("paused");
   const [sortedNumber, setSortedNumber] = useState(0);
   const [buttons, setButtons] = useState<ButtonGameArrayProps[]>(
     Array.from({ length: 50 }, (_, index) => ({
@@ -26,17 +32,11 @@ export default function Index() {
     }))
   );
   const [isDialogBoxNewGameVisible, setIsDialogBoxNewGameVisible] = useState(false);
+  const [isDialogBoxFoundedNumberVisible, setIsDialogBoxFoundedNumberVisible] = useState(false);
 
-  function enableAllButtons() {
-    setButtons((prevButtons) =>
-      prevButtons.map((button) => ({ ...button, disabled: false, style: styles.buttonGameActive }))
-    );
-  }
-
-  function disableAllButtons() {
-    setButtons((prevButtons) =>
-      prevButtons.map((button) => ({ ...button, disabled: true, style: styles.buttonGameDisable }))
-    );
+  function closeAllDialogs() {
+    setIsDialogBoxNewGameVisible(false);
+    setIsDialogBoxFoundedNumberVisible(false);
   }
 
   useEffect(() => {
@@ -51,58 +51,61 @@ export default function Index() {
     })();
   }, []);
 
-  function startGameSortedMode() {
+  function startSortedMode() {
+    closeAllDialogs();
+    lastClickedGameMode = "sortedMode";
     if (appState === "playing") {
-      // TODO: Dialog box for "Are you sure you want to start a new game?"
+      appState = "paused";
       setIsDialogBoxNewGameVisible(true);
       return;
     }
-    showToast("Numero sorteado, boa sorte a todos!");
-    // TODO: Toast message "Numero sorteado, boa sorte a todos!" + Audio
+    // TODO:  Audio
     startGame(Math.floor(Math.random() * 50) + 1);
+    showToast("Numero sorteado, boa sorte a todos!");
   }
 
   function startSelectingMode() {
+    closeAllDialogs();
+    lastClickedGameMode = "selectingMode";
     if (appState === "playing") {
-      // TODO: Dialog box for "Are you sure you want to start a new game?"
+      appState = "paused";
+      setIsDialogBoxNewGameVisible(true);
       return;
     }
-    setCurrentState("selecting");
+
+    showToast("Selecione um número para começar!");
+    appState = "selecting";
     enableAllButtons();
   }
 
   function startGame(sortedNumber: number) {
+    enableAllButtons();
     setSortedNumber(sortedNumber);
     console.log("Numero sorteado: ", sortedNumber);
-    enableAllButtons();
-    setCurrentState("playing");
-  }
-
-  function handleNewGame() {
-    // TODO: Implement logic for game restart
-    showToast("Novo jogo iniciado!");
+    appState = "playing";
   }
 
   function gameButtonPressed(button: number) {
     console.log("Botão pressionado: ", button);
     if (appState == "paused") {
-      // NeverExecuted
-      showToast("Selecione um modo de jogo abaixo!");
-      // TODO: Audio
+      //That should never be called / debug only
+      showToast("Selecione um modo de jogo para começar!");
+      console.log("BUG Detected: Gamebutton pressed while paused!");
       return;
     }
 
     if (appState == "selecting") {
       startGame(button);
-      showToast("Numero escolhido, boa sorte a todos!");
+      showToast("Numero escolhido, passe para o próximo!");
       // TODO: Audio
       return;
     }
 
     if (appState == "playing") {
       if (button == sortedNumber) {
+        setIsDialogBoxFoundedNumberVisible(true);
+        appState = "paused";
         disableAllButtons();
-        setCurrentState("paused");
         // TODO: Modal message "Parabéns, você encontrou!" Botão "Jogar novamente" // resetar o estado do jogo
         // Chama o interstitial Ad com um toast antes
         return;
@@ -137,6 +140,18 @@ export default function Index() {
     }
   }
 
+  function enableAllButtons() {
+    setButtons((prevButtons) =>
+      prevButtons.map((button) => ({ ...button, disabled: false, style: styles.buttonGameActive }))
+    );
+  }
+
+  function disableAllButtons() {
+    setButtons((prevButtons) =>
+      prevButtons.map((button) => ({ ...button, disabled: true, style: styles.buttonGameDisable }))
+    );
+  }
+
   return (
     <>
       <InlineAd />
@@ -153,13 +168,19 @@ export default function Index() {
       </View>
       <View style={styles.footerContainer}>
         <TouchableOpacity
-          onPress={startGameSortedMode}
+          onPress={() => {
+            console.log("Botão pressionado:  buttonSortedMode");
+            startSortedMode();
+          }}
           key={"buttonSort"}
           style={styles.buttonMenu}>
           <Ionicons size={iconSizeStandard} name="dice-sharp" color="black" />
         </TouchableOpacity>
         <TouchableOpacity
-          onPress={startSelectingMode}
+          onPress={() => {
+            console.log("Botão pressionado:  buttonSelectMode");
+            startSelectingMode();
+          }}
           key={"buttonSelect"}
           style={styles.buttonMenu}>
           <Ionicons size={iconSizeStandard} name="eye-sharp" color="black" />
@@ -170,11 +191,54 @@ export default function Index() {
       </View>
 
       <View>
-        <Dialog.Container visible={isDialogBoxNewGameVisible}>
+        <Dialog.Container
+          visible={isDialogBoxNewGameVisible}
+          onBackdropPress={() => {
+            appState = "playing";
+            setIsDialogBoxNewGameVisible(false);
+          }}
+          onRequestClose={() => {
+            appState = "playing";
+            setIsDialogBoxNewGameVisible(false);
+          }}>
           <Dialog.Title>Novo Jogo</Dialog.Title>
           <Dialog.Description>Tem certeza que deseja começar um novo Jogo?</Dialog.Description>
-          <Dialog.Button onPress={handleNewGame} label="Sim" />
-          <Dialog.Button onPress={() => setIsDialogBoxNewGameVisible(false)} label="Cancelar" />
+          <Dialog.Button
+            onPress={() => {
+              console.log(lastClickedGameMode);
+              lastClickedGameMode == "sortedMode" ? startSortedMode() : startSelectingMode();
+            }}
+            label="Novo Jogo"
+          />
+          <Dialog.Button
+            onPress={() => {
+              appState = "playing";
+              setIsDialogBoxNewGameVisible(false);
+            }}
+            label="Cancelar"
+          />
+        </Dialog.Container>
+      </View>
+
+      <View>
+        <Dialog.Container
+          visible={isDialogBoxFoundedNumberVisible}
+          onBackdropPress={() => {
+            appState = "playing";
+            setIsDialogBoxFoundedNumberVisible(false);
+          }}
+          onRequestClose={() => {
+            appState = "playing";
+            setIsDialogBoxFoundedNumberVisible(false);
+          }}>
+          <Dialog.Title>Você encontrou!</Dialog.Title>
+          <Dialog.Button
+            onPress={() => {
+              console.log(lastClickedGameMode);
+              lastClickedGameMode == "sortedMode" ? startSortedMode() : startSelectingMode();
+            }}
+            label="Jogar Novamente"
+          />
         </Dialog.Container>
       </View>
     </>
