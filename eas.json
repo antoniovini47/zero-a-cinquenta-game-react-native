@@ -32,7 +32,7 @@
       "channel": "production",
       "android": {
         "buildType": "app-bundle",
-        "autoIncrement": "version"
+        "autoIncrement": "versionCode"
       },
       "env": {
           "EXPO_PUBLIC_ADMOB_APP_ID": "$EXPO_PUBLIC_ADMOB_APP_ID$",
