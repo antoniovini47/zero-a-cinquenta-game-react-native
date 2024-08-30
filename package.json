@@ -1,16 +1,17 @@
 {
   "name": "zero-a-cinquenta-game-react-native",
   "main": "expo-router/entry",
-  "version": "2.0.1",
+  "version": "2.0.2",
   "scripts": {
     "start": "expo start",
-    "android": "expo run:android",
     "ios": "expo run:ios",
     "web": "expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint",
     "build:dev:ios": "eas build --profile development --platform ios --local",
-    "build:dev:android": "eas build --profile development --platform android --local"
+    "buildAndroidFolder-13": "expo run:android --device",
+    "buildApk-2": "eas build --profile development --platform android --local",
+    "android": "expo run:android"
   },
   "jest": {
     "preset": "jest-expo"

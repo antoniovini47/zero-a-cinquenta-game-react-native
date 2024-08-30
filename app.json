@@ -1,8 +1,8 @@
 {
   "expo": {
-    "name": "zero-a-cinquenta-game-react-native",
+    "name": "Zero a Cinquenta",
     "slug": "zero-a-cinquenta",
-    "version": "2.0.1",
+    "version": "3.0.1",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -14,10 +14,11 @@
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rotech.dezeroacinquentadev"
+      "bundleIdentifier": "com.rotech.dezeroacinquenta"
     },
     "android": {
-      "package": "com.rotech.dezeroacinquentadev",
+      "package": "com.rotech.dezeroacinquenta",
+      "versionCode": 6,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#000000"
