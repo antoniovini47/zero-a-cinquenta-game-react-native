@@ -6,6 +6,19 @@ import InlineAd from "@/components/InlineAd";
 import { Ionicons } from "@expo/vector-icons";
 import showToast from "@/components/useToast";
 import Dialog from "react-native-dialog";
+import * as Device from "expo-device";
+import { AdEventType, InterstitialAd, TestIds } from "react-native-google-mobile-ads";
+import * as Linking from "expo-linking";
+
+//Intersticial Initial configs
+const iosAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
+const androidAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
+const productionID = Device.osName === "Android" ? androidAdmobInterstitial : iosAdmobInterstitial;
+const adUnitId: string = __DEV__ ? TestIds.INTERSTITIAL : productionID;
+const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
+  keywords: ["saúde", "alimentação", "calorias", "fitness"], // Update based on the most relevant keywords for your app/users, these are just random examples
+  requestNonPersonalizedAdsOnly: true, // Update based on the initial tracking settings from initialization earlier
+});
 
 const iconSizeStandard = 48;
 const textInstructions =
@@ -23,6 +36,34 @@ let lastClickedGameMode: string = "sortedMode";
 let appState: AppState = "paused";
 
 export default function Index() {
+  //Intersticial functions
+  const [loaded, setLoaded] = useState<boolean>(false);
+
+  useEffect(() => {
+    // Event listener for when the ad is loaded
+    const unsubscribeLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
+      setLoaded(true);
+    });
+
+    // Event listener for when the ad is closed
+    const unsubscribeClosed = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
+      setLoaded(false);
+
+      // Load a new ad when the current ad is closed
+      interstitial.load();
+    });
+
+    // Start loading the interstitial ad straight away
+    interstitial.load();
+
+    // Unsubscribe from events on unmount
+    return () => {
+      unsubscribeLoaded();
+      unsubscribeClosed();
+    };
+  }, []);
+
+  //Other functions
   const [sortedNumber, setSortedNumber] = useState(0);
   const [buttons, setButtons] = useState<ButtonGameArrayProps[]>(
     Array.from({ length: 50 }, (_, index) => ({
@@ -33,10 +74,12 @@ export default function Index() {
   );
   const [isDialogBoxNewGameVisible, setIsDialogBoxNewGameVisible] = useState(false);
   const [isDialogBoxFoundedNumberVisible, setIsDialogBoxFoundedNumberVisible] = useState(false);
+  const [isDialogBoxConfigsVisible, setIsDialogBoxConfigsVisible] = useState(false);
 
   function closeAllDialogs() {
     setIsDialogBoxNewGameVisible(false);
     setIsDialogBoxFoundedNumberVisible(false);
+    setIsDialogBoxConfigsVisible(false);
   }
 
   useEffect(() => {
@@ -185,7 +228,10 @@ export default function Index() {
           style={styles.buttonMenu}>
           <Ionicons size={iconSizeStandard} name="eye-sharp" color="black" />
         </TouchableOpacity>
-        <TouchableOpacity key={"buttonSettings"} style={styles.buttonMenu}>
+        <TouchableOpacity
+          onPress={() => setIsDialogBoxConfigsVisible(true)}
+          key={"buttonSettings"}
+          style={styles.buttonMenu}>
           <Ionicons size={iconSizeStandard} name="cog-sharp" color="black" />
         </TouchableOpacity>
       </View>
@@ -235,10 +281,36 @@ export default function Index() {
           <Dialog.Button
             onPress={() => {
               console.log(lastClickedGameMode);
+              if (loaded) {
+                interstitial.show();
+              }
               lastClickedGameMode == "sortedMode" ? startSortedMode() : startSelectingMode();
             }}
             label="Jogar Novamente"
           />
+        </Dialog.Container>
+      </View>
+
+      <View>
+        <Dialog.Container
+          visible={isDialogBoxConfigsVisible}
+          onBackdropPress={() => {
+            setIsDialogBoxConfigsVisible(false);
+          }}
+          onRequestClose={() => {
+            setIsDialogBoxConfigsVisible(false);
+          }}>
+          <Dialog.Title>Como Jogar</Dialog.Title>
+          <Dialog.Description>{textInstructions}</Dialog.Description>
+          <Dialog.Button
+            onPress={() => {
+              closeAllDialogs();
+            }}
+            label="Fechar"
+          />
+          <Dialog.Button
+            onPress={() => Linking.openURL(urlPremiumVersion)}
+            label="Remover Anúncios"></Dialog.Button>
         </Dialog.Container>
       </View>
     </>
