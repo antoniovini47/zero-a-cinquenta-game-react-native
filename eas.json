@@ -6,6 +6,7 @@
     "development": {
       "developmentClient": true,
       "distribution": "internal",
+      "channel": "development",
       "android": {
         "buildType": "apk"
       },
@@ -16,6 +17,7 @@
       }
     },
     "preview": {
+      "developmentClient": false,
       "distribution": "internal",
       "channel": "preview",
       "android": {
@@ -24,7 +26,7 @@
       "env": {
           "EXPO_PUBLIC_ADMOB_APP_ID": "$EXPO_PUBLIC_ADMOB_APP_ID$",
           "EXPO_PUBLIC_ADMOB_BANNER_ID": "$EXPO_PUBLIC_ADMOB_BANNER_ID$",
-        "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "$EXPO_PUBLIC_ADMOB_INTERSTITAL_ID$"
+          "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "$EXPO_PUBLIC_ADMOB_INTERSTITAL_ID$"
       }
     },
     "production": {
@@ -37,7 +39,7 @@
       "env": {
           "EXPO_PUBLIC_ADMOB_APP_ID": "$EXPO_PUBLIC_ADMOB_APP_ID$",
           "EXPO_PUBLIC_ADMOB_BANNER_ID": "$EXPO_PUBLIC_ADMOB_BANNER_ID$",
-        "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "$EXPO_PUBLIC_ADMOB_INTERSTITAL_ID$"
+          "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "$EXPO_PUBLIC_ADMOB_INTERSTITAL_ID$"
       }
     }
   },

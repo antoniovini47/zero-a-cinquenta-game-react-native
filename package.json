@@ -1,7 +1,7 @@
 {
   "name": "zero-a-cinquenta-game-react-native",
   "main": "expo-router/entry",
-  "version": "2.0.2",
+  "version": "3.0.1",
   "scripts": {
     "start": "expo start",
     "ios": "expo run:ios",
