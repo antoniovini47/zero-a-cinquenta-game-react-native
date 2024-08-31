@@ -34,8 +34,8 @@
       [
         "react-native-google-mobile-ads",
         {
-          "androidAppId": "$EXPO_PUBLIC_ADMOB_APP_ID$",
-          "iosAppId": "$EXPO_PUBLIC_ADMOB_APP_ID$"
+          "androidAppId": "ca-app-pub-9218769381944425~1106639996",
+          "iosAppId": "ca-app-pub-9218769381944425~1106639996"
         }
       ]
     ],
@@ -59,6 +59,6 @@
     }
   },
   "react-native-google-mobile-ads": {
-    "android_app_id": "$EXPO_PUBLIC_ADMOB_APP_ID$"
+    "android_app_id": "ca-app-pub-9218769381944425~1106639996"
   }
 }

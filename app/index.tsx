@@ -247,8 +247,10 @@ export default function Index() {
             appState = "playing";
             setIsDialogBoxNewGameVisible(false);
           }}>
-          <Dialog.Title>Novo Jogo</Dialog.Title>
-          <Dialog.Description>Tem certeza que deseja começar um novo Jogo?</Dialog.Description>
+          <Dialog.Title style={styles.text}>Novo Jogo</Dialog.Title>
+          <Dialog.Description style={styles.textDialogBoxDescription}>
+            Tem certeza que deseja começar um novo Jogo?
+          </Dialog.Description>
           <Dialog.Button
             onPress={() => {
               console.log(lastClickedGameMode);
@@ -277,11 +279,11 @@ export default function Index() {
             appState = "playing";
             setIsDialogBoxFoundedNumberVisible(false);
           }}>
-          <Dialog.Title>Você encontrou!</Dialog.Title>
+          <Dialog.Title style={styles.text}>Você encontrou!</Dialog.Title>
           <Dialog.Button
             onPress={() => {
               console.log(lastClickedGameMode);
-              if (loaded) {
+              if (loaded && !__DEV__) {
                 interstitial.show();
               }
               lastClickedGameMode == "sortedMode" ? startSortedMode() : startSelectingMode();
@@ -300,8 +302,10 @@ export default function Index() {
           onRequestClose={() => {
             setIsDialogBoxConfigsVisible(false);
           }}>
-          <Dialog.Title>Como Jogar</Dialog.Title>
-          <Dialog.Description>{textInstructions}</Dialog.Description>
+          <Dialog.Title style={styles.text}>Como Jogar</Dialog.Title>
+          <Dialog.Description style={styles.textDialogBoxDescription}>
+            {textInstructions}
+          </Dialog.Description>
           <Dialog.Button
             onPress={() => {
               closeAllDialogs();

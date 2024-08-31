@@ -67,6 +67,9 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: fontSizeStandard,
   },
+  textDialogBoxDescription: {
+    color: "black",
+  },
 });
 
 export default styles;
