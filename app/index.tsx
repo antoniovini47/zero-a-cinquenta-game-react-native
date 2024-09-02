@@ -10,63 +10,50 @@ import * as Device from "expo-device";
 import { AdEventType, InterstitialAd, TestIds } from "react-native-google-mobile-ads";
 import * as Linking from "expo-linking";
 import { Audio } from "expo-av";
+import { textInstructions, urlPremiumVersion } from "@/components/texts";
+import { iconSizeStandard } from "@/assets/dimens";
 
 //Intersticial Initial configs
 const iosAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
 const androidAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
 const productionID = Device.osName === "Android" ? androidAdmobInterstitial : iosAdmobInterstitial;
-const adUnitId: string = __DEV__ ? TestIds.INTERSTITIAL : productionID;
+const adUnitId: string | undefined | any = __DEV__ ? TestIds.INTERSTITIAL : productionID;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   keywords: ["saúde", "alimentação", "calorias", "fitness"], // Update based on the most relevant keywords for your app/users, these are just random examples
   requestNonPersonalizedAdsOnly: true, // Update based on the initial tracking settings from initialization earlier
 });
-
-const iconSizeStandard = 48;
-const textInstructions =
-  "Um jogo de adivinhação ao contrário, ou seja, seu objetivo é não adivinhar. App idealizado com base no famoso jogo de roda de amigos chamado 'Zero a Cinquenta'.\n\nModo de jogo 1 (Escolher número): \nAo escolher um número, a pessoa da vez passa para seu amigo ao lado. Este, escolhe um dos 50 números, caso erre, passa para o próximo. Se alguém acertar, perde e paga o 'castigo', se não restarem números, exceto o número secreto, o que escondeu o jogador da vez é que perde. \nA pessoa que paga a prenda é aquela que perdeu, esta agora é o que escolhe. \n\nModo de jogo 2 (Sortear): \nO jogador da vez pode usar a opção 'sortear' disponível, o próprio jogo escolhe um número aleatório e ninguém mais saberá qual é, logo, o jogador da vez também participa desse modo de jogo, pois, também não sabe onde se encontra.";
-const urlPremiumVersion =
-  "https://play.google.com/store/apps/details?id=com.rotech.zeroacinquentapremium";
 
 export interface ButtonGameArrayProps {
   idButton: number;
   disabled: boolean;
   style: any;
 }
-type AppState = "playing" | "paused" | "selecting";
 let lastClickedGameMode: string = "sortedMode";
+
+type AppState = "playing" | "paused" | "selecting";
 let appState: AppState = "paused";
 
 export default function Index() {
-  //Intersticial functions
+  // Intersticial functions
   const [loaded, setLoaded] = useState<boolean>(false);
-
   useEffect(() => {
-    // Event listener for when the ad is loaded
     const unsubscribeLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
       setLoaded(true);
     });
-
-    // Event listener for when the ad is closed
     const unsubscribeClosed = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
       setLoaded(false);
-
-      // Load a new ad when the current ad is closed
       interstitial.load();
     });
-
-    // Start loading the interstitial ad straight away
     interstitial.load();
-
-    // Unsubscribe from events on unmount
     return () => {
       unsubscribeLoaded();
       unsubscribeClosed();
     };
   }, []);
 
-  //Other functions
+  // App's functions
   const [sortedNumber, setSortedNumber] = useState(0);
-  const [buttons, setButtons] = useState<ButtonGameArrayProps[]>(
+  const [gameButtons, setButtons] = useState<ButtonGameArrayProps[]>(
     Array.from({ length: 50 }, (_, index) => ({
       idButton: index + 1,
       disabled: true,
@@ -166,7 +153,6 @@ export default function Index() {
   }
 
   function deactivateImpossibles(buttonPressed: number) {
-    // TODO: Create logic for deactivating impossible buttons
     if (buttonPressed < sortedNumber) {
       setButtons((prevButtons) =>
         prevButtons.map((button) => {
@@ -206,7 +192,7 @@ export default function Index() {
     <>
       <InlineAd />
       <View style={styles.mainContainer}>
-        {buttons.map((button) => (
+        {gameButtons.map((button) => (
           <TouchableOpacity
             onPress={() => gameButtonPressed(button.idButton)}
             disabled={button.disabled}
