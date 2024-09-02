@@ -1,43 +1,36 @@
 {
   "expo": {
-    "name": "Zero a Cinquenta",
-    "slug": "zero-a-cinquenta",
+    "name": "Zero a Cinquenta Premium",
+    "slug": "zero-a-cinquenta-premium",
     "version": "3.0.1",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon-premium.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "splash": {
-      "image": "./assets/images/splash.png",
+      "image": "./assets/images/splash-premium.png",
       "resizeMode": "contain",
       "backgroundColor": "#000000"
     },
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rotech.dezeroacinquenta"
+      "bundleIdentifier": "com.rotech.zeroacinquentapremium"
     },
     "android": {
-      "package": "com.rotech.dezeroacinquenta",
+      "package": "com.rotech.zeroacinquentapremium",
       "versionCode": 8,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/icon-premium.png",
         "backgroundColor": "#000000"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/icon-premium.png"
     },
     "plugins": [
-      "expo-router",
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-9218769381944425~1106639996",
-          "iosAppId": "ca-app-pub-9218769381944425~1106639996"
-        }
-      ]
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true
@@ -57,8 +50,5 @@
     "updates": {
       "url": "https://u.expo.dev/f0ada14a-c3ce-42db-a855-8b46f23b3e27"
     }
-  },
-  "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-9218769381944425~1106639996"
   }
 }

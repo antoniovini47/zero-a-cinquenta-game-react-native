@@ -9,11 +9,6 @@
       "channel": "development",
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-        "EXPO_PUBLIC_ADMOB_APP_ID": "ca-app-pub-9218769381944425~1106639996",
-        "EXPO_PUBLIC_ADMOB_BANNER_ID": "ca-app-pub-9218769381944425/2583373193",
-        "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "ca-app-pub-9218769381944425/3386579382"
       }
     },
     "preview": {
@@ -22,11 +17,6 @@
       "channel": "preview",
       "android": {
         "buildType": "apk"
-      },
-      "env": {
-          "EXPO_PUBLIC_ADMOB_APP_ID": "ca-app-pub-9218769381944425~1106639996",
-          "EXPO_PUBLIC_ADMOB_BANNER_ID": "ca-app-pub-9218769381944425/2583373193",
-          "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "ca-app-pub-9218769381944425/3386579382"
       }
     },
     "production": {
@@ -35,11 +25,13 @@
       "android": {
         "buildType": "app-bundle",
         "autoIncrement": "versionCode"
-      },
-      "env": {
-          "EXPO_PUBLIC_ADMOB_APP_ID": "ca-app-pub-9218769381944425~1106639996",
-          "EXPO_PUBLIC_ADMOB_BANNER_ID": "ca-app-pub-9218769381944425/2583373193",
-          "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "ca-app-pub-9218769381944425/3386579382"
+      }
+    },
+    "productionAPK": {
+      "distribution": "store",
+      "channel": "production",
+      "android": {
+        "buildType": "apk"
       }
     }
   },

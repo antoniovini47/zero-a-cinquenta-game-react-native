@@ -1,27 +1,13 @@
 import { Text, View, TouchableOpacity } from "react-native";
 import { useEffect, useState } from "react";
 import styles from "@/assets/Styles";
-import mobileAds from "react-native-google-mobile-ads";
 import InlineAd from "@/components/InlineAd";
 import { Ionicons } from "@expo/vector-icons";
 import showToast from "@/components/useToast";
 import Dialog from "react-native-dialog";
-import * as Device from "expo-device";
-import { AdEventType, InterstitialAd, TestIds } from "react-native-google-mobile-ads";
-import * as Linking from "expo-linking";
 import { Audio } from "expo-av";
-import { textInstructions, urlPremiumVersion } from "@/components/texts";
+import { textInstructions } from "@/components/texts";
 import { iconSizeStandard } from "@/assets/dimens";
-
-//Intersticial Initial configs
-const iosAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
-const androidAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
-const productionID = Device.osName === "Android" ? androidAdmobInterstitial : iosAdmobInterstitial;
-const adUnitId: string | undefined | any = __DEV__ ? TestIds.INTERSTITIAL : productionID;
-const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  keywords: ["saúde", "alimentação", "calorias", "fitness"], // Update based on the most relevant keywords for your app/users, these are just random examples
-  requestNonPersonalizedAdsOnly: true, // Update based on the initial tracking settings from initialization earlier
-});
 
 export interface ButtonGameArrayProps {
   idButton: number;
@@ -34,24 +20,6 @@ type AppState = "playing" | "paused" | "selecting";
 let appState: AppState = "paused";
 
 export default function Index() {
-  // Intersticial functions
-  const [loaded, setLoaded] = useState<boolean>(false);
-  useEffect(() => {
-    const unsubscribeLoaded = interstitial.addAdEventListener(AdEventType.LOADED, () => {
-      setLoaded(true);
-    });
-    const unsubscribeClosed = interstitial.addAdEventListener(AdEventType.CLOSED, () => {
-      setLoaded(false);
-      interstitial.load();
-    });
-    interstitial.load();
-    return () => {
-      unsubscribeLoaded();
-      unsubscribeClosed();
-    };
-  }, []);
-
-  // App's functions
   const [sortedNumber, setSortedNumber] = useState(0);
   const [gameButtons, setButtons] = useState<ButtonGameArrayProps[]>(
     Array.from({ length: 50 }, (_, index) => ({
@@ -76,18 +44,6 @@ export default function Index() {
     setIsDialogBoxFoundedNumberVisible(false);
     setIsDialogBoxConfigsVisible(false);
   }
-
-  useEffect(() => {
-    (async () => {
-      // Google AdMob will show any messages here that you just set up on the AdMob Privacy & Messaging page
-      // const { status: trackingStatus } = await requestTrackingPermissionsAsync();
-      // if (trackingStatus !== "granted") {
-      //   // Do something here such as turn off Sentry tracking, store in context/redux to allow for personalized ads, etc.
-      // }
-
-      await mobileAds().initialize();
-    })();
-  }, []);
 
   function startSortedMode() {
     closeAllDialogs();
@@ -190,7 +146,6 @@ export default function Index() {
 
   return (
     <>
-      <InlineAd />
       <View style={styles.mainContainer}>
         {gameButtons.map((button) => (
           <TouchableOpacity
@@ -276,9 +231,6 @@ export default function Index() {
           <Dialog.Button
             onPress={() => {
               console.log(lastClickedGameMode);
-              if (loaded && !__DEV__) {
-                interstitial.show();
-              }
               lastClickedGameMode == "sortedMode" ? startSortedMode() : startSelectingMode();
             }}
             label="Jogar Novamente"
@@ -305,10 +257,6 @@ export default function Index() {
             }}
             label="Fechar"
           />
-          <Dialog.Button
-            onPress={() => Linking.openURL(urlPremiumVersion)}
-            label="Remover Anúncios"></Dialog.Button>
-        </Dialog.Container>
       </View>
     </>
   );
