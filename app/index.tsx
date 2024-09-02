@@ -9,6 +9,7 @@ import Dialog from "react-native-dialog";
 import * as Device from "expo-device";
 import { AdEventType, InterstitialAd, TestIds } from "react-native-google-mobile-ads";
 import * as Linking from "expo-linking";
+import { Audio } from "expo-av";
 
 //Intersticial Initial configs
 const iosAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
@@ -75,6 +76,13 @@ export default function Index() {
   const [isDialogBoxNewGameVisible, setIsDialogBoxNewGameVisible] = useState(false);
   const [isDialogBoxFoundedNumberVisible, setIsDialogBoxFoundedNumberVisible] = useState(false);
   const [isDialogBoxConfigsVisible, setIsDialogBoxConfigsVisible] = useState(false);
+  const [sound, setSound]: any = useState();
+
+  async function playSound(soundUrl: any) {
+    const { sound } = await Audio.Sound.createAsync(soundUrl);
+    setSound(sound);
+    await sound.playAsync();
+  }
 
   function closeAllDialogs() {
     setIsDialogBoxNewGameVisible(false);
@@ -102,7 +110,6 @@ export default function Index() {
       setIsDialogBoxNewGameVisible(true);
       return;
     }
-    // TODO:  Audio
     startGame(Math.floor(Math.random() * 50) + 1);
     showToast("Numero sorteado, boa sorte a todos!");
   }
@@ -122,6 +129,7 @@ export default function Index() {
   }
 
   function startGame(sortedNumber: number) {
+    playSound(require("../assets/raw/started.wav"));
     enableAllButtons();
     setSortedNumber(sortedNumber);
     console.log("Numero sorteado: ", sortedNumber);
@@ -129,6 +137,7 @@ export default function Index() {
   }
 
   function gameButtonPressed(button: number) {
+    playSound(require("../assets/raw/click.mp3"));
     console.log("Botão pressionado: ", button);
     if (appState == "paused") {
       //That should never be called / debug only
@@ -140,17 +149,15 @@ export default function Index() {
     if (appState == "selecting") {
       startGame(button);
       showToast("Numero escolhido, passe para o próximo!");
-      // TODO: Audio
       return;
     }
 
     if (appState == "playing") {
       if (button == sortedNumber) {
         setIsDialogBoxFoundedNumberVisible(true);
+        playSound(require("../assets/raw/founded.wav"));
         appState = "paused";
         disableAllButtons();
-        // TODO: Modal message "Parabéns, você encontrou!" Botão "Jogar novamente" // resetar o estado do jogo
-        // Chama o interstitial Ad com um toast antes
         return;
       }
     }
