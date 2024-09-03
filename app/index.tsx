@@ -257,6 +257,7 @@ export default function Index() {
             }}
             label="Fechar"
           />
+        </Dialog.Container>
       </View>
     </>
   );

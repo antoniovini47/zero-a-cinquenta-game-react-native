@@ -18,16 +18,16 @@
     },
     "android": {
       "package": "com.rotech.zeroacinquentapremium",
-      "versionCode": 8,
+      "versionCode": 6,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/icon-premium.png",
+        "foregroundImage": "./assets/images/adaptative-icon-premium.png",
         "backgroundColor": "#000000"
       }
     },
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon-premium.png"
+      "favicon": "./assets/images/adaptative-icon-premium.png"
     },
     "plugins": [
       "expo-router"
@@ -40,7 +40,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "f0ada14a-c3ce-42db-a855-8b46f23b3e27"
+        "projectId": "6bd0aede-2131-48cf-a520-ac6f6b27494c"
       }
     },
     "owner": "rotec",
