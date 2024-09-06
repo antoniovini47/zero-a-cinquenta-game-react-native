@@ -19,7 +19,7 @@ const androidAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
 const productionID = Device.osName === "Android" ? androidAdmobInterstitial : iosAdmobInterstitial;
 const adUnitId: string | undefined | any = __DEV__ ? TestIds.INTERSTITIAL : productionID;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
-  keywords: ["saúde", "alimentação", "calorias", "fitness"], // Update based on the most relevant keywords for your app/users, these are just random examples
+  keywords: ["games", "bebida", "jogos", "sorte"], // Update based on the most relevant keywords for your app/users, these are just random examples
   requestNonPersonalizedAdsOnly: true, // Update based on the initial tracking settings from initialization earlier
 });
 
