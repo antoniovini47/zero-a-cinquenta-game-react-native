@@ -16,9 +16,8 @@
         "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "ca-app-pub-9218769381944425/3386579382"
       }
     },
-    "preview": {
-      "developmentClient": false,
-      "distribution": "internal",
+    "APKpreview": {
+      "distribution": "store",
       "channel": "preview",
       "android": {
         "buildType": "apk"

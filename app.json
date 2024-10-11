@@ -2,7 +2,7 @@
   "expo": {
     "name": "Zero a Cinquenta",
     "slug": "zero-a-cinquenta",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
@@ -18,7 +18,7 @@
     },
     "android": {
       "package": "com.rotech.dezeroacinquenta",
-      "versionCode": 8,
+      "versionCode": 10,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#000000"

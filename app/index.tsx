@@ -194,7 +194,7 @@ export default function Index() {
       <View style={styles.mainContainer}>
         {gameButtons.map((button) => (
           <TouchableOpacity
-            onPress={() => gameButtonPressed(button.idButton)}
+            onPressIn={() => gameButtonPressed(button.idButton)}
             disabled={button.disabled}
             key={button.idButton}
             style={button.style}>
