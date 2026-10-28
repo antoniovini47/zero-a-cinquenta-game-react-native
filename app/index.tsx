@@ -1,4 +1,5 @@
 import { Text, View, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import styles from "@/assets/Styles";
 import mobileAds from "react-native-google-mobile-ads";
@@ -187,7 +188,7 @@ export default function Index() {
   }
 
   return (
-    <>
+    <SafeAreaView style={styles.safeArea}>
       <InlineAd />
       <View style={styles.mainContainer}>
         {gameButtons.map((button) => (
@@ -304,6 +305,6 @@ export default function Index() {
             label="Remover Anúncios"></Dialog.Button>
         </Dialog.Container>
       </View>
-    </>
+    </SafeAreaView>
   );
 }
