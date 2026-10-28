@@ -1,21 +1,21 @@
 {
   "expo": {
-    "name": "Zero a Cinquenta",
-    "slug": "zero-a-cinquenta",
+    "name": "Zero a Cinquenta Premium",
+    "slug": "zero-a-cinquenta-premium",
     "version": "3.1.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/icon-premium.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.rotech.dezeroacinquenta"
+      "bundleIdentifier": "com.rotech.zeroacinquentapremium"
     },
     "android": {
-      "package": "com.rotech.dezeroacinquenta",
-      "versionCode": 14,
+      "package": "com.rotech.zeroacinquentapremium",
+      "versionCode": 6,
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
+        "foregroundImage": "./assets/images/adaptative-icon-premium.png",
         "backgroundColor": "#000000"
       },
       "blockedPermissions": [
@@ -27,24 +27,17 @@
     "web": {
       "bundler": "metro",
       "output": "static",
-      "favicon": "./assets/images/favicon.png"
+      "favicon": "./assets/images/adaptative-icon-premium.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/splash.png",
+          "image": "./assets/images/splash-premium.png",
           "resizeMode": "contain",
           "backgroundColor": "#000000",
           "imageWidth": 200
-        }
-      ],
-      [
-        "react-native-google-mobile-ads",
-        {
-          "androidAppId": "ca-app-pub-9218769381944425~1106639996",
-          "iosAppId": "ca-app-pub-9218769381944425~1106639996"
         }
       ],
       "expo-asset"
@@ -57,7 +50,7 @@
         "origin": false
       },
       "eas": {
-        "projectId": "f0ada14a-c3ce-42db-a855-8b46f23b3e27"
+        "projectId": "6bd0aede-2131-48cf-a520-ac6f6b27494c"
       }
     },
     "owner": "rotec",
@@ -65,7 +58,7 @@
       "policy": "appVersion"
     },
     "updates": {
-      "url": "https://u.expo.dev/f0ada14a-c3ce-42db-a855-8b46f23b3e27"
+      "url": "https://u.expo.dev/6bd0aede-2131-48cf-a520-ac6f6b27494c"
     }
   }
 }

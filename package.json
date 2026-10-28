@@ -1,5 +1,5 @@
 {
-  "name": "zero-a-cinquenta-game-react-native",
+  "name": "zero-a-cinquenta-game-react-native-premium",
   "main": "expo-router/entry",
   "version": "3.1.0",
   "scripts": {
@@ -19,7 +19,6 @@
     "expo-audio": "~58.0.10",
     "expo-constants": "~58.0.14",
     "expo-dev-client": "~58.0.17",
-    "expo-device": "~58.0.5",
     "expo-font": "~58.0.11",
     "expo-linking": "~58.0.15",
     "expo-router": "~58.0.28",
@@ -33,7 +32,6 @@
     "react-native": "0.88.0",
     "react-native-dialog": "^9.3.0",
     "react-native-gesture-handler": "~3.3.0",
-    "react-native-google-mobile-ads": "^17.4.0",
     "react-native-safe-area-context": "~5.10.1",
     "react-native-screens": "~4.30.0",
     "react-native-web": "~0.21.4"
