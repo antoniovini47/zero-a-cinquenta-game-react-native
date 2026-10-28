@@ -14,6 +14,10 @@ const buttonGame: ViewStyle = {
 };
 
 const styles = StyleSheet.create({
+  safeArea: {
+    flex: 1,
+    backgroundColor: backgroundColor,
+  },
   adHeaderContainer: {
     flexDirection: "row",
     paddingBottom: paddingStandard,

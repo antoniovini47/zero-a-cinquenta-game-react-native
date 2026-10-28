@@ -1,4 +1,5 @@
 import { Text, View, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useState } from "react";
 import styles from "@/assets/Styles";
 import { Ionicons } from "@expo/vector-icons";
@@ -142,7 +143,7 @@ export default function Index() {
   }
 
   return (
-    <>
+    <SafeAreaView style={styles.safeArea}>
       <View style={styles.mainContainer}>
         {gameButtons.map((button) => (
           <TouchableOpacity
@@ -252,6 +253,6 @@ export default function Index() {
           />
         </Dialog.Container>
       </View>
-    </>
+    </SafeAreaView>
   );
 }
