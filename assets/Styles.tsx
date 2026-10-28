@@ -1,11 +1,11 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet, ViewStyle } from "react-native";
 
 const paddingStandard = 6;
 const fontSizeStandard = 20;
 
 const backgroundColor = "black";
 
-const buttonGame = {
+const buttonGame: ViewStyle = {
   height: "9%",
   width: "18%",
   justifyContent: "center",

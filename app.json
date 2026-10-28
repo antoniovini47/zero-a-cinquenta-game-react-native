@@ -2,16 +2,11 @@
   "expo": {
     "name": "Zero a Cinquenta",
     "slug": "zero-a-cinquenta",
-    "version": "3.0.2",
+    "version": "3.1.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
     "scheme": "myapp",
     "userInterfaceStyle": "automatic",
-    "splash": {
-      "image": "./assets/images/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#000000"
-    },
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.rotech.dezeroacinquenta"
@@ -22,7 +17,12 @@
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#000000"
-      }
+      },
+      "blockedPermissions": [
+        "android.permission.SYSTEM_ALERT_WINDOW",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -32,12 +32,22 @@
     "plugins": [
       "expo-router",
       [
+        "expo-splash-screen",
+        {
+          "image": "./assets/images/splash.png",
+          "resizeMode": "contain",
+          "backgroundColor": "#000000",
+          "imageWidth": 200
+        }
+      ],
+      [
         "react-native-google-mobile-ads",
         {
           "androidAppId": "ca-app-pub-9218769381944425~1106639996",
           "iosAppId": "ca-app-pub-9218769381944425~1106639996"
         }
-      ]
+      ],
+      "expo-asset"
     ],
     "experiments": {
       "typedRoutes": true
@@ -57,8 +67,5 @@
     "updates": {
       "url": "https://u.expo.dev/f0ada14a-c3ce-42db-a855-8b46f23b3e27"
     }
-  },
-  "react-native-google-mobile-ads": {
-    "android_app_id": "ca-app-pub-9218769381944425~1106639996"
   }
 }
