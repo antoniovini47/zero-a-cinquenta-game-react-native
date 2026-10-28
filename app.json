@@ -13,7 +13,7 @@
     },
     "android": {
       "package": "com.rotech.dezeroacinquenta",
-      "versionCode": 14,
+      "versionCode": 15,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#000000"
