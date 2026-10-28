@@ -44,12 +44,6 @@
     }
   },
   "submit": {
-    "production": {
-      "android": {
-        "serviceAccountKeyPath": "~/.secrets/play-publisher.json",
-        "track": "internal",
-        "releaseStatus": "completed"
-      }
-    }
+    "production": {}
   }
 }
