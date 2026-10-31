@@ -7,7 +7,6 @@ import InlineAd from "@/components/InlineAd";
 import { Ionicons } from "@expo/vector-icons";
 import showToast from "@/components/useToast";
 import Dialog from "react-native-dialog";
-import * as Device from "expo-device";
 import { AdEventType, InterstitialAd, TestIds } from "react-native-google-mobile-ads";
 import * as Linking from "expo-linking";
 import { AudioPlayer, useAudioPlayer } from "expo-audio";
@@ -15,10 +14,7 @@ import { textInstructions, urlPremiumVersion } from "@/components/texts";
 import { iconSizeStandard } from "@/assets/dimens";
 
 //Intersticial Initial configs
-const iosAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
-const androidAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
-const productionID = Device.osName === "Android" ? androidAdmobInterstitial : iosAdmobInterstitial;
-const adUnitId: string | undefined | any = __DEV__ ? TestIds.INTERSTITIAL : productionID;
+const adUnitId = (!__DEV__ && process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID) || TestIds.INTERSTITIAL;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   keywords: ["games", "bebida", "jogos", "sorte"],
   requestNonPersonalizedAdsOnly: true, // Update based on the initial tracking settings from initialization earlier
