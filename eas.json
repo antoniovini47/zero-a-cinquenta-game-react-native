@@ -1,6 +1,6 @@
 {
   "cli": {
-    "version": ">= 10.2.3",
+    "version": ">= 16.0.0",
     "appVersionSource": "local"
   },
   "build": {
@@ -8,34 +8,23 @@
       "developmentClient": true,
       "distribution": "internal",
       "channel": "development",
-      "android": {
-        "buildType": "apk"
-      },
-      "env": {
-        "EXPO_PUBLIC_ADMOB_APP_ID": "ca-app-pub-9218769381944425~1106639996"
-      }
-    },
-    "APKpreview": {
-      "distribution": "store",
-      "channel": "preview",
-      "android": {
-        "buildType": "apk"
-      },
-      "env": {
-        "EXPO_PUBLIC_ADMOB_APP_ID": "ca-app-pub-9218769381944425~1106639996"
-      }
+      "android": { "buildType": "apk" }
     },
     "production": {
       "distribution": "store",
       "channel": "production",
-      "android": {
-        "buildType": "app-bundle",
-        "autoIncrement": "versionCode"
-      },
+      "environment": "production",
+      "android": { "buildType": "app-bundle" },
       "env": {
-        "EXPO_PUBLIC_ADMOB_APP_ID": "ca-app-pub-9218769381944425~1106639996",
-        "EXPO_PUBLIC_ADMOB_BANNER_ID": "ca-app-pub-9218769381944425/2583373193",
-        "EXPO_PUBLIC_ADMOB_INTERSTITAL_ID": "ca-app-pub-9218769381944425/3386579382"
+        "EXPO_PUBLIC_ADS": "production",
+        "EXPO_PUBLIC_ANALYTICS": "on"
+      }
+    },
+    "production-premium": {
+      "extends": "production",
+      "env": {
+        "EXPO_PUBLIC_VARIANT": "premium",
+        "EXPO_PUBLIC_ANALYTICS": "on"
       }
     }
   },

@@ -1,7 +1,7 @@
 {
   "name": "zero-a-cinquenta-game-react-native",
   "main": "expo-router/entry",
-  "version": "3.1.0",
+  "version": "4.0.0",
   "scripts": {
     "start": "expo start",
     "ios": "expo run:ios",
@@ -10,10 +10,14 @@
     "build:dev:ios": "eas build --profile development --platform ios --local",
     "buildAndroidFolder-13": "expo run:android --device",
     "buildApk-2": "eas build --profile development --platform android --local",
-    "android": "expo run:android"
+    "android": "expo run:android",
+    "test": "jest"
   },
   "dependencies": {
+    "@expo-google-fonts/nunito": "^0.4.2",
     "@expo/vector-icons": "^15.0.2",
+    "@react-native-firebase/analytics": "^27.1.0",
+    "@react-native-firebase/app": "^27.1.0",
     "expo": "~58.0.21",
     "expo-asset": "~58.0.19",
     "expo-audio": "~58.0.10",
@@ -21,6 +25,7 @@
     "expo-dev-client": "~58.0.17",
     "expo-device": "~58.0.5",
     "expo-font": "~58.0.11",
+    "expo-haptics": "~58.0.7",
     "expo-linking": "~58.0.15",
     "expo-router": "~58.0.28",
     "expo-splash-screen": "~58.0.12",
@@ -31,7 +36,6 @@
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "react-native": "0.88.0",
-    "react-native-dialog": "^9.3.0",
     "react-native-gesture-handler": "~3.3.0",
     "react-native-google-mobile-ads": "^17.4.0",
     "react-native-safe-area-context": "~5.10.1",
@@ -40,8 +44,19 @@
   },
   "devDependencies": {
     "@babel/core": "^7.20.0",
+    "@types/jest": "^30.0.0",
     "@types/react": "~19.3.0",
+    "eslint": "^9.0.0",
+    "eslint-config-expo": "~58.0.4",
+    "jest": "^30.5.2",
+    "jest-expo": "^58.0.13",
     "typescript": "~6.0.3"
   },
-  "private": true
+  "private": true,
+  "jest": {
+    "preset": "jest-expo",
+    "testMatch": [
+      "<rootDir>/src/**/__tests__/**/*.test.ts?(x)"
+    ]
+  }
 }
