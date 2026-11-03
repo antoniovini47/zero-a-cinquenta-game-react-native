@@ -1,4 +1,5 @@
 import { Text, View, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
 import { useEffect, useState } from "react";
 import styles from "@/assets/Styles";
 import mobileAds from "react-native-google-mobile-ads";
@@ -6,18 +7,14 @@ import InlineAd from "@/components/InlineAd";
 import { Ionicons } from "@expo/vector-icons";
 import showToast from "@/components/useToast";
 import Dialog from "react-native-dialog";
-import * as Device from "expo-device";
 import { AdEventType, InterstitialAd, TestIds } from "react-native-google-mobile-ads";
 import * as Linking from "expo-linking";
-import { Audio } from "expo-av";
+import { AudioPlayer, useAudioPlayer } from "expo-audio";
 import { textInstructions, urlPremiumVersion } from "@/components/texts";
 import { iconSizeStandard } from "@/assets/dimens";
 
 //Intersticial Initial configs
-const iosAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
-const androidAdmobInterstitial = process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID;
-const productionID = Device.osName === "Android" ? androidAdmobInterstitial : iosAdmobInterstitial;
-const adUnitId: string | undefined | any = __DEV__ ? TestIds.INTERSTITIAL : productionID;
+const adUnitId = (!__DEV__ && process.env.EXPO_PUBLIC_ADMOB_INTERSTITAL_ID) || TestIds.INTERSTITIAL;
 const interstitial = InterstitialAd.createForAdRequest(adUnitId, {
   keywords: ["games", "bebida", "jogos", "sorte"],
   requestNonPersonalizedAdsOnly: true, // Update based on the initial tracking settings from initialization earlier
@@ -63,12 +60,13 @@ export default function Index() {
   const [isDialogBoxNewGameVisible, setIsDialogBoxNewGameVisible] = useState(false);
   const [isDialogBoxFoundedNumberVisible, setIsDialogBoxFoundedNumberVisible] = useState(false);
   const [isDialogBoxConfigsVisible, setIsDialogBoxConfigsVisible] = useState(false);
-  const [sound, setSound]: any = useState();
+  const startedSound = useAudioPlayer(require("../assets/raw/started.wav"));
+  const clickSound = useAudioPlayer(require("../assets/raw/click.mp3"));
+  const foundedSound = useAudioPlayer(require("../assets/raw/founded.wav"));
 
-  async function playSound(soundUrl: any) {
-    const { sound } = await Audio.Sound.createAsync(soundUrl);
-    setSound(sound);
-    await sound.playAsync();
+  function playSound(player: AudioPlayer) {
+    player.seekTo(0);
+    player.play();
   }
 
   function closeAllDialogs() {
@@ -116,20 +114,17 @@ export default function Index() {
   }
 
   function startGame(sortedNumber: number) {
-    playSound(require("../assets/raw/started.wav"));
+    playSound(startedSound);
     enableAllButtons();
     setSortedNumber(sortedNumber);
-    console.log("Numero sorteado: ", sortedNumber);
     appState = "playing";
   }
 
   function gameButtonPressed(button: number) {
-    playSound(require("../assets/raw/click.mp3"));
-    console.log("Botão pressionado: ", button);
+    playSound(clickSound);
     if (appState == "paused") {
       //That should never be called / debug only
       showToast("Selecione um modo de jogo para começar!");
-      console.log("BUG Detected: Gamebutton pressed while paused!");
       return;
     }
 
@@ -142,7 +137,7 @@ export default function Index() {
     if (appState == "playing") {
       if (button == sortedNumber) {
         setIsDialogBoxFoundedNumberVisible(true);
-        playSound(require("../assets/raw/founded.wav"));
+        playSound(foundedSound);
         appState = "paused";
         disableAllButtons();
         return;
@@ -189,7 +184,7 @@ export default function Index() {
   }
 
   return (
-    <>
+    <SafeAreaView style={styles.safeArea}>
       <InlineAd />
       <View style={styles.mainContainer}>
         {gameButtons.map((button) => (
@@ -205,7 +200,6 @@ export default function Index() {
       <View style={styles.footerContainer}>
         <TouchableOpacity
           onPress={() => {
-            console.log("Botão pressionado:  buttonSortedMode");
             startSortedMode();
           }}
           key={"buttonSort"}
@@ -214,7 +208,6 @@ export default function Index() {
         </TouchableOpacity>
         <TouchableOpacity
           onPress={() => {
-            console.log("Botão pressionado:  buttonSelectMode");
             startSelectingMode();
           }}
           key={"buttonSelect"}
@@ -246,7 +239,6 @@ export default function Index() {
           </Dialog.Description>
           <Dialog.Button
             onPress={() => {
-              console.log(lastClickedGameMode);
               lastClickedGameMode == "sortedMode" ? startSortedMode() : startSelectingMode();
             }}
             label="Novo Jogo"
@@ -275,7 +267,6 @@ export default function Index() {
           <Dialog.Title style={styles.text}>Você encontrou!</Dialog.Title>
           <Dialog.Button
             onPress={() => {
-              console.log(lastClickedGameMode);
               if (loaded && !__DEV__) {
                 interstitial.show();
               }
@@ -310,6 +301,6 @@ export default function Index() {
             label="Remover Anúncios"></Dialog.Button>
         </Dialog.Container>
       </View>
-    </>
+    </SafeAreaView>
   );
 }
