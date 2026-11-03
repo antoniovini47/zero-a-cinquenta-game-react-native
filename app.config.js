@@ -11,6 +11,7 @@ const premium = (config) => ({
     ...config.android,
     package: 'com.rotech.zeroacinquentapremium',
     versionCode: 9,
+    blockedPermissions: [...config.android.blockedPermissions, 'com.google.android.gms.permission.AD_ID', 'android.permission.ACCESS_ADSERVICES_AD_ID'],
     adaptiveIcon: { ...config.android.adaptiveIcon, foregroundImage: './assets/images/adaptative-icon-premium.png' },
   },
   plugins: config.plugins

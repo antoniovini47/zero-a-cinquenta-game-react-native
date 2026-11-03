@@ -24,7 +24,7 @@
       "extends": "production",
       "env": {
         "EXPO_PUBLIC_VARIANT": "premium",
-        "EXPO_PUBLIC_ANALYTICS": "on"
+        "EXPO_PUBLIC_ANALYTICS": "off"
       }
     }
   },
