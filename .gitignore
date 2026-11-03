@@ -154,3 +154,6 @@ expo-env.d.ts
 android/
 ios/
 credentials.json
+
+# Firebase config lives in EAS env (GOOGLE_SERVICES_JSON)
+google-services.json
