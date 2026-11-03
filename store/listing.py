@@ -43,7 +43,7 @@ def check(r, step):
 
 
 check(requests.put(f"{B}/edits/{eid}/listings/{LANG}", headers=H, json={"language": LANG, "title": TITLE, "shortDescription": SHORT, "fullDescription": FULL}, timeout=60), "LISTING")
-for kind, files in [("featureGraphic", ["feature.png"]), ("phoneScreenshots", [f"shot{i}.png" for i in range(1, 6)])]:
+for kind, files in [("featureGraphic", ["feature.png"]), ("phoneScreenshots", [f"shot{i}.png" for i in range(1, 5 if PREMIUM else 6)])]:
     check(requests.delete(f"{B}/edits/{eid}/listings/{LANG}/{kind}", headers=H, timeout=60), f"DELETE {kind}")
     for name in files:
         with open(f"{out}/{name}", "rb") as f:
