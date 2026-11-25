@@ -30,7 +30,7 @@
       "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
-      "./plugins/withAppLovinAdapter",
+      "./plugins/withLiftoffAdapter",
       "expo-router",
       [
         "expo-splash-screen",
